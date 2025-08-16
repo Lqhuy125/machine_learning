@@ -29,7 +29,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 # 0) Xác định đường dẫn CSV
 # ----------------------------
 # Cách 1: đặt đường dẫn tuyệt đối vào đây nếu bạn muốn cố định vị trí file
-csv_path_abs = "D:/Users/Learn/CaoHoc/HocMay/workspace/Data/Mall_Customers.csv"  # ví dụ: "/Users/thanhha/Desktop/du_lieu_cua_hang_ban_le.csv"
+csv_path_abs = "D:/Users/Learn/CaoHoc/HocMay/workspace/machine_learning/Data/Mall_Customers.csv"  # ví dụ: "/Users/thanhha/Desktop/du_lieu_cua_hang_ban_le.csv"
 
 def load_csv_safe(csv_path_abs: str) -> pd.DataFrame:
     # 1) Nếu có đường dẫn tuyệt đối hợp lệ -> dùng luôn
@@ -165,39 +165,3 @@ print(f"Độ lệch chuẩn R² (CV): {cv_scores.std():.3f}")
 # - Thử Ridge/Lasso để regularize và giảm đa cộng tuyến
 # - Dùng TimeSeriesSplit nếu dữ liệu có thứ tự thời gian dài
 # - Thêm đặc trưng (cuối tuần, lễ, thời tiết, lag features)
-
-# Mô hình phi tuyến: Random Forest
-rf_pipe = Pipeline(
-    steps=[
-        ("preprocess", preprocess),  # Dùng chung bộ preprocess
-        ("rf", RandomForestRegressor(
-            n_estimators=200,
-            random_state=42
-        )),
-    ]
-)
-
-# # Huấn luyện và đánh giá trên hold-out
-# rf_pipe.fit(X_train, y_train)
-# y_pred_rf = rf_pipe.predict(X_test)
-
-# mae_rf  = mean_absolute_error(y_test, y_pred_rf)
-# mse_rf  = mean_squared_error(y_test, y_pred_rf)
-# rmse_rf = float(np.sqrt(mse_rf))
-# r2_rf   = float(r2_score(y_test, y_pred_rf))
-
-# print("\nHiệu năng trên tập TEST (hold-out) - Random Forest:")
-# print({"MAE": round(mae_rf, 3), "RMSE": round(rmse_rf, 3), "R2": round(r2_rf, 3)})
-
-# # Cross-Validation cho Random Forest
-# cv_scores_rf = cross_val_score(rf_pipe, X, y, cv=kf, scoring="r2")
-# print(f"\nKFold CV ({k} folds) - R² từng fold (Random Forest):", np.round(cv_scores_rf, 3).tolist())
-# print(f"R² trung bình (CV - RF): {cv_scores_rf.mean():.3f}")
-# print(f"Độ lệch chuẩn R² (CV - RF): {cv_scores_rf.std():.3f}")
-
-# # ----------------------------
-# # 10) So sánh kết quả
-# # ----------------------------
-# print("\n=== So sánh Tuyến tính vs Phi tuyến (CV Mean R²) ===")
-# print(f"Linear Regression: {cv_scores.mean():.3f}")
-# print(f"Random Forest:     {cv_scores_rf.mean():.3f}")
